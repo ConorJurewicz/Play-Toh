@@ -44,5 +44,8 @@ int main() {
 * [Repeat steps 3-5]
 * [Choose Color, Choose Shape, Fill Chape with Color]
 *
+* The things that change for steps 3-5 (to create a different shape with a different color)
+*  1. 
+*
 */
 
