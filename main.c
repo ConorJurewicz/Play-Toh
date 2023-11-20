@@ -1,6 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 #include <cairo.h>
+#include "shapes.h"
+
+/*
+ *TODO: 
+    1. Create a randomly generated shape
+    2. Choose a radnomly generated color for the randomly generated shape
+    3. Have user be able to input how many randomly generated shapes [with randomly generated]
+    color to be drawn
+ *
+ */
+
 
 int main() {
+
+    srand(time(NULL));
+
+    int shape_ind = rand() % NUM_SHAPES;
+    const char *selected_shape = shapes[shape_ind];
+    printf("%s\n", selected_shape);
+    
     // Create a Cairo surface
     cairo_surface_t *surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 400, 300);
     
