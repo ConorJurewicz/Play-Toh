@@ -1,3 +1,4 @@
+// cc -o exe $(pkg-config --cflags --libs cairo) main.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -19,30 +20,32 @@ int main() {
 
     srand(time(NULL));
 
+    // Choosing a shape
     int shape_ind = rand() % NUM_SHAPES;
     const char *selected_shape = shapes[shape_ind];
-    printf("%s\n", selected_shape);
     
-    // Create a Cairo surface
+    // Creating a Cairo surface
     cairo_surface_t *surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 400, 300);
     
-    // Create a Cairo context
+    // Creating a Cairo context
     cairo_t *cr = cairo_create(surface);
 
-    // Set the source color for the background (RGB values between 0.0 and 1.0)
+    // Setting background color [RGB, 0.0 - 1.0]
     cairo_set_source_rgb(cr, 0.0, 0.0, 0.0); // Black
 
-    // Draw a filled rectangle to serve as the background
-    cairo_rectangle(cr, 0, 0, 400, 300); // Assuming the surface size is 400x300
+    // Drawing a rectangle to act as the background [x, y, W, H]
+    cairo_rectangle(cr, 0, 0, 400, 300); // W,H matches Surface
+    
+    // Coloring the rectangle with source RGB
     cairo_fill(cr);
 
-    // Set the source color for the blue rectangle
-    cairo_set_source_rgb(cr, 0.0, 0.0, 1.0); // Blue
+    // Setting the color for a new shape to be drawn [RGB, 0.0 - 1.0]
+    cairo_set_source_rgb(cr, 0.0, 0.0, 1.0) // Blue
 
-    // Draw a rectangle on top of the background
+    // Drawing a rectangle on top of background [x, y, W, H]
     cairo_rectangle(cr, 50, 50, 300, 200);
     
-    // Fill the rectangle with the source color
+    // Fill the rectangle with the source color 
     cairo_fill(cr);
 
     // Save the surface to an image file (PNG format in this case)
@@ -66,8 +69,6 @@ int main() {
 * [Repeat steps 3-5]
 * [Choose Color, Choose Shape, Fill Chape with Color]
 *
-* The things that change for steps 3-5 (to create a different shape with a different color)
-*  1. 
 *
 */
 
