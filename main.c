@@ -9,11 +9,8 @@
 
 /*
  *TODO: 
-    1. Create a randomly generated shape
-    2. Choose a radnomly generated color for the randomly generated shape
-    3. Have user be able to input how many randomly generated shapes [with randomly generated]
-    color to be drawn
- *
+ *  1. Implement drawings for triangle
+    2. 
  */
 
 
@@ -23,7 +20,7 @@ int main() {
     short HEIGHT = 500;
 
     short MIN_SIZE = 1;
-    short MAX_SIZE = WIDTH/2;
+    short MAX_SIZE = WIDTH/5;
 
     srand(time(NULL));
 
@@ -54,21 +51,21 @@ int main() {
         short size_h = rand() % MAX_SIZE;
         
         // Generating random coordinates for shape
-        short rand_x = rand() % (WIDTH);
-        short rand_y = rand() & (HEIGHT); 
+        short rand_x = rand() % (WIDTH-1);
+        short rand_y = rand() % (HEIGHT-1); 
 
         // Generating random color for shape
         double rand_R = (double)rand() / RAND_MAX;
         double rand_G = (double)rand() / RAND_MAX;
         double rand_B = (double)rand() / RAND_MAX;
 
+        
+        cairo_set_source_rgb(cr, rand_R, rand_G, rand_B);
 
 
         if(strcmp(selected_shape, "rectangle") == 0){
             printf("Rectangle going to be drawn.\n");
-            // Setting the color for a new shape to be drawn [RGB, 0.0 - 1.0]
-            cairo_set_source_rgb(cr, rand_R, rand_G, rand_B);
-            // Drawing a rectangle on top of background [x, y, W, H]
+            // Drawing a rectangle on top of background [surface, x, y, W, H]
             cairo_rectangle(cr, rand_x, rand_y, size_w, size_h);
             
             // Fill the rectangle with the source color 
@@ -77,12 +74,27 @@ int main() {
 
         else if(strcmp(selected_shape, "circle") == 0){
             printf("Circle going to be drawn.\n");
+            // Drawing an arc on screen [surface, x, y, radius, angle1, angle2]
+            cairo_arc(cr, rand_x, rand_y, rand()%50, rand()%100, rand()%50);
+            
+            // Filling circle
+            cairo_fill(cr);
+
         }
 
         else if(strcmp(selected_shape, "triangle") == 0){
             printf("Triangle going to be drawn.\n");
         }
 
+        else if(strcmp(selected_shape, "bezier curve") == 0){
+            printf("Beziur curve going to be drawn.\n");
+
+            cairo_curve_to(cr, rand_x, rand_y, 
+            rand_x+rand()%100, rand_y+rand()%50,
+            rand_x+rand()%50, rand_y+rand()%50);
+
+            cairo_fill(cr);
+        }
 
         shapes_to_draw--;
     }
@@ -95,18 +107,3 @@ int main() {
 
     return 0;
 }
-
-/*
-*
-* There's a pattern of creation for cairo.
-* 1. Create a surface
-* 2. Create a context
-* 3. Choose color for current shape
-* 4. Draw shape
-* 5. Fill shape with color
-* [Repeat steps 3-5]
-* [Choose Color, Choose Shape, Fill Chape with Color]
-*
-*
-*/
-
